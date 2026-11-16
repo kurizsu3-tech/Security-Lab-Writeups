@@ -10,13 +10,13 @@
 
 | Day | 主题 | 覆盖 Lab | 数量 | 时长 |
 |-----|------|----------|------|------|
-| 1 | CSRF 原理 + 三个"经典缺陷" | Lab 1–4 | 4 | 3 h |
-| 2 | CSRF 令牌绑定缺陷与 Referer 绕过 | Lab 5–8 | 4 | 3 h |
-| 3 | SQLi 原理 + 隐藏数据 / 登录绕过 / 指纹 | Lab 9–12 | 4 | 3 h |
-| 4 | UNION 起步 + 库表结构枚举 | Lab 13–16 | 4 | 3 h |
-| 5 | UNION 取数据 + 布尔盲注两种信号 | Lab 17–20 | 4 | 3 h |
-| 6 | 时间盲注 + 带外（OAST） | Lab 21–24 | 4 | 3 h |
-| 7 | WAF/XML 编码绕过 + 全局复盘 | Lab 25 + 复盘 | 1 | 3 h |
+| 1 | CSRF 原理 + 三个"经典缺陷" | Lab 1–4 | 4 |
+| 2 | CSRF 令牌绑定缺陷与 Referer 绕过 | Lab 5–8 | 4 |
+| 3 | SQLi 原理 + 隐藏数据 / 登录绕过 / 指纹 | Lab 9–12 | 4 |
+| 4 | UNION 起步 + 库表结构枚举 | Lab 13–16 | 4 |
+| 5 | UNION 取数据 + 布尔盲注两种信号 | Lab 17–20 | 4 |
+| 6 | 时间盲注 + 带外（OAST） | Lab 21–24 | 4 |
+| 7 | WAF/XML 编码绕过 + 全局复盘 | Lab 25 + 复盘 | 1 |
 
 时间分配原则：**原理 40–50 min → 动手 120–130 min → 写笔记 20–30 min**。
 宁可少打一个 lab，也不要跳过写笔记那 20 分钟——第 7 天能把 25 个 lab 串成一张表，靠的就是这 7 段笔记。
@@ -46,35 +46,35 @@
 - **Deliver 只能成功一次**：改完 PoC 必须重新 **Store**，再 Deliver，否则投递的是旧页面。这是前两天最容易浪费时间的坑。
 - **每个 lab 独立实例**，实例过期（约 30–60 min 无操作）会重置，登录态和改过的邮箱全部回滚。
 
-## 四、进度表（自己填实际用时）
+## 四、25 个 Lab 一览（难度与官方预估用时）
 
-| # | Lab | 难度 | 预计 | 实际 | 状态 |
-|---|-----|------|------|------|------|
-| 1 | CSRF vulnerability with no defenses | Apprentice | 20 min | | ☐ |
-| 2 | CSRF where token validation depends on request method | Apprentice | 20 min | | ☐ |
-| 3 | CSRF where token validation depends on token being present | Apprentice | 20 min | | ☐ |
-| 4 | CSRF where token is not tied to user session | Apprentice | 30 min | | ☐ |
-| 5 | CSRF where token is tied to a non-session cookie | Practitioner | 45 min | | ☐ |
-| 6 | CSRF where token is duplicated in cookie | Practitioner | 40 min | | ☐ |
-| 7 | CSRF where Referer validation depends on header being present | Practitioner | 35 min | | ☐ |
-| 8 | CSRF with broken Referer validation | Practitioner | 40 min | | ☐ |
-| 9 | SQLi in WHERE clause allowing retrieval of hidden data | Apprentice | 20 min | | ☐ |
-| 10 | SQLi allowing login bypass | Apprentice | 15 min | | ☐ |
-| 11 | Querying the database type and version on Oracle | Practitioner | 30 min | | ☐ |
-| 12 | Querying the database type and version on MySQL and MSSQL | Practitioner | 25 min | | ☐ |
-| 13 | UNION attack, determining the number of columns | Practitioner | 30 min | | ☐ |
-| 14 | UNION attack, finding a column containing text | Practitioner | 30 min | | ☐ |
-| 15 | Listing database contents on non-Oracle databases | Practitioner | 40 min | | ☐ |
-| 16 | Listing database contents on Oracle | Practitioner | 40 min | | ☐ |
-| 17 | UNION attack, retrieving data from other tables | Practitioner | 35 min | | ☐ |
-| 18 | UNION attack, retrieving multiple values in a single column | Practitioner | 30 min | | ☐ |
-| 19 | Blind SQLi with conditional responses | Practitioner | 45 min | | ☐ |
-| 20 | Blind SQLi with conditional errors | Practitioner | 45 min | | ☐ |
-| 21 | Blind SQLi with time delays | Practitioner | 35 min | | ☐ |
-| 22 | Blind SQLi with time delays and information retrieval | Practitioner | 45 min | | ☐ |
-| 23 | Blind SQLi with out-of-band interaction | Practitioner | 40 min | | ☐ |
-| 24 | Blind SQLi with out-of-band data exfiltration | Practitioner | 45 min | | ☐ |
-| 25 | SQLi with filter bypass via XML encoding | Practitioner | 60 min | | ☐ |
+| # | Lab | 难度 | 预计 |
+|---|---|---|---|
+| 1 | CSRF vulnerability with no defenses | Apprentice | 20 min |
+| 2 | CSRF where token validation depends on request method | Apprentice | 20 min |
+| 3 | CSRF where token validation depends on token being present | Apprentice | 20 min |
+| 4 | CSRF where token is not tied to user session | Apprentice | 30 min |
+| 5 | CSRF where token is tied to a non-session cookie | Practitioner | 45 min |
+| 6 | CSRF where token is duplicated in cookie | Practitioner | 40 min |
+| 7 | CSRF where Referer validation depends on header being present | Practitioner | 35 min |
+| 8 | CSRF with broken Referer validation | Practitioner | 40 min |
+| 9 | SQLi in WHERE clause allowing retrieval of hidden data | Apprentice | 20 min |
+| 10 | SQLi allowing login bypass | Apprentice | 15 min |
+| 11 | Querying the database type and version on Oracle | Practitioner | 30 min |
+| 12 | Querying the database type and version on MySQL and MSSQL | Practitioner | 25 min |
+| 13 | UNION attack, determining the number of columns | Practitioner | 30 min |
+| 14 | UNION attack, finding a column containing text | Practitioner | 30 min |
+| 15 | Listing database contents on non-Oracle databases | Practitioner | 40 min |
+| 16 | Listing database contents on Oracle | Practitioner | 40 min |
+| 17 | UNION attack, retrieving data from other tables | Practitioner | 35 min |
+| 18 | UNION attack, retrieving multiple values in a single column | Practitioner | 30 min |
+| 19 | Blind SQLi with conditional responses | Practitioner | 45 min |
+| 20 | Blind SQLi with conditional errors | Practitioner | 45 min |
+| 21 | Blind SQLi with time delays | Practitioner | 35 min |
+| 22 | Blind SQLi with time delays and information retrieval | Practitioner | 45 min |
+| 23 | Blind SQLi with out-of-band interaction | Practitioner | 40 min |
+| 24 | Blind SQLi with out-of-band data exfiltration | Practitioner | 45 min |
+| 25 | SQLi with filter bypass via XML encoding | Practitioner | 60 min |
 
 ## 五、这套笔记的写法约定
 
