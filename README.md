@@ -106,3 +106,8 @@
 目前求职方向：**渗透测试 / 安全服务工程师**。
 
 如果这些记录对你有帮助，欢迎 Star；发现问题也欢迎开 Issue 指正。
+
+## 许可
+
+- 文档内容：[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- 脚本代码：[MIT](LICENSE)
