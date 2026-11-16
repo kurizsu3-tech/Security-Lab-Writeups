@@ -88,7 +88,7 @@ Payload：
 访问：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/xss_d/?default=<img src=x onerror=alert(1)>
+http://127.0.0.1/dvwa/vulnerabilities/xss_d/?default=<img src=x onerror=alert(1)>
 ```
 
 页面弹窗，Medium 难度绕过成功。
@@ -96,7 +96,7 @@ http://靶机IP/dvwa/vulnerabilities/xss_d/?default=<img src=x onerror=alert(1)>
 也可以直接使用 `<script>`：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/xss_d/?default=<script>alert(1)</script>
+http://127.0.0.1/dvwa/vulnerabilities/xss_d/?default=<script>alert(1)</script>
 ```
 
 同样会弹窗，证明 PHP 端过滤未生效。

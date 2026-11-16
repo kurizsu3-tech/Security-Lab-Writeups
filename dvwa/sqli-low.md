@@ -17,7 +17,13 @@ $query = "SELECT first_name, last_name FROM users WHERE user_id = '$id'";
 
 在 User ID 输入框中提交 `1`，观察到 URL 地址栏出现 `?id=1`，由此判断提交方式为 **GET** 请求。
 
-接着提交 `1'`，页面返回数据库报错信息（多出一个单引号），说明参数被单引号包裹，属于**字符型注入**。进一步提交 `1' or 1=1#`，页面返回全部用户记录，确认注入点存在且注释符 `#` 有效。
+![正常提交 id=1，页面回显第一条用户记录](../images/sqli-low-01-normal.png)
+
+接着提交 `1'`，页面返回数据库报错信息（多出一个单引号），说明参数被单引号包裹，属于**字符型注入**：
+
+![提交 1' 触发 MySQL 语法错误](../images/sqli-low-02-syntax-error.png)
+
+进一步提交 `1' or 1=1#`，页面返回全部用户记录，确认注入点存在且注释符 `#` 有效。
 
 ### 2. 判断字段数量
 
@@ -48,6 +54,8 @@ $query = "SELECT first_name, last_name FROM users WHERE user_id = '$id'";
 ```sql
 1' union select version(),2#
 ```
+
+![UNION 回显数据库版本 5.7.26](../images/sqli-low-03-version.png)
 
 **获取当前数据库名：**
 

