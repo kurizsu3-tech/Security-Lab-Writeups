@@ -66,7 +66,7 @@ Username and/or password incorrect.
 
 ## 四、Burp Suite Intruder 爆破
 
-### 1\. 配置代理并抓取登录请求
+### 1. 配置代理并抓取登录请求
 
 1. 打开 Burp Suite，确保代理监听在 `127.0.0.1:8080`。
 2. 浏览器设置代理为 `127.0.0.1:8080`。
@@ -84,7 +84,7 @@ Accept: text/html,...
 Connection: close
 ```
 
-### 2\. 设置攻击类型
+### 2. 设置攻击类型
 
 进入 **Intruder -> Positions** 标签页。
 
@@ -103,7 +103,7 @@ Cookie: PHPSESSID=...; security=low
 
 攻击类型选择 **Cluster bomb**，因为需要同时枚举用户名和密码。
 
-### 3\. 准备字典
+### 3. 准备字典
 
 **用户名字典**（`users.txt`）：
 
@@ -132,14 +132,14 @@ dragon
 
 > DVWA 默认用户为 `admin`、`gordonb`、`1337`、`pablo`、`smithy`，默认密码可以在数据库初始化时设置。常见默认密码为 `password`。
 
-### 4\. 配置 Payload
+### 4. 配置 Payload
 
 进入 **Intruder -> Payloads** 标签页。
 
 - **Payload set 1**：选择用户名对应的位置，Payload type 选择 **Simple list**，加载 `users.txt`。
 - **Payload set 2**：选择密码对应的位置，Payload type 选择 **Simple list**，加载 `passwords.txt`。
 
-### 5\. 开始攻击
+### 5. 开始攻击
 
 点击右上角 **Start attack** 按钮。
 
@@ -149,7 +149,7 @@ Burp 会依次组合用户名和密码，发送大量请求。攻击过程中可
 - **Length**：响应长度。成功登录的响应长度通常与失败不同。
 - **Word count**：词数，也可作为判断依据。
 
-### 6\. 分析结果
+### 6. 分析结果
 
 在攻击结果中，按 **Length** 排序。失败的响应长度基本一致，成功的响应会明显不同。
 
@@ -170,7 +170,7 @@ Burp 会依次组合用户名和密码，发送大量请求。攻击过程中可
 admin / password
 ```
 
-### 7\. 验证登录
+### 7. 验证登录
 
 用找到的凭证在浏览器中登录 DVWA，成功进入受保护区域，说明爆破成功。
 

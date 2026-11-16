@@ -43,7 +43,7 @@ if (isset($_GET['Change'])) {
 
 ## 三、手工利用流程
 
-### 1\. 正常修改密码
+### 1. 正常修改密码
 
 在 DVWA 页面输入新密码和确认密码，点击 Change，URL 变为：
 
@@ -53,7 +53,7 @@ http://靶机IP/dvwa/vulnerabilities/csrf/?password_new=123456&password_conf=123
 
 页面提示 `Password Changed.`，密码修改成功。
 
-### 2\. 构造恶意页面
+### 2. 构造恶意页面
 
 攻击者创建一个 HTML 文件，例如 `csrf_low.html`：
 
@@ -87,7 +87,7 @@ http://靶机IP/dvwa/vulnerabilities/csrf/?password_new=123456&password_conf=123
 </html>
 ```
 
-### 3\. 诱导受害者访问
+### 3. 诱导受害者访问
 
 攻击者将 `csrf_low.html` 放在自己的服务器上，或者通过社工手段让受害者访问。例如：
 
@@ -97,7 +97,7 @@ http://攻击者IP/csrf_low.html
 
 受害者已登录 DVWA 的情况下打开该页面，浏览器会静默发送请求，密码被修改为 `hacked`。
 
-### 4\. 验证攻击成功
+### 4. 验证攻击成功
 
 攻击者使用 `admin` / `hacked` 登录 DVWA，如果能成功登录，说明 CSRF 攻击成功。
 

